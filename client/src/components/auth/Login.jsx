@@ -1,8 +1,29 @@
-import React, { useState, useContext } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useContext, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Login = () => {
+    const navigate = useNavigate();
     const alertContext = useContext(AlertContext);
+    const authContext = useContext(AuthContext);
+
+    const { login, error, clearErrors, isAuthenticated, token } = authContext;
+
+    useEffect(()=>{
+        if(isAuthenticated && token !== null){
+            navigate('/');
+        }
+        if(error === 'Invalid credentials'){
+            setAlert(error, 'danger');
+            clearErrors();
+        }
+        if(error === 'Please enter a valid Email'){
+            setAlert(error, 'danger');
+            clearErrors();
+        }
+    }, [error, isAuthenticated, navigate]);
     const { setAlert } = alertContext;
     const [user, setUser] = useState({
         email: '',
@@ -14,14 +35,15 @@ const Login = () => {
     const onChange = (e)=> setUser({...user, [e.target.name]: e.target.value});
     const onSubmit = e => {
         e.preventDefault();
-        if( email !== '' && password !== '' ){
-            // make post request 
-            // return response
-            // redirect user
-            // clear state
-            setAlert("Login successful", "success");
-        }
-        setAlert("Please enter valid credentials", "danger");
+        if( email === '' && password === '' ){
+           return setAlert("Please enter valid credentials", "danger");
+        } 
+        // make post request 
+        login({email,password});
+        // return response
+        // redirect user
+        // navigate('/');
+        // clear state
         
     }
 

@@ -20,7 +20,7 @@ const Register = props => {
             setAlert(error, 'danger');
             clearErrors();
         }
-    }, [error, isAuthenticated, props.history]);
+    }, [error, isAuthenticated]);
     const [user, setUser] = useState({
         name: '',
         email: '',
