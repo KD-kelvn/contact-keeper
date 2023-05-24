@@ -1,14 +1,21 @@
-import React, {useContext} from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useContext, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { Link, useNavigate } from 'react-router-dom';
+import ContactContext from '../../context/contact/ContactContext';
 import AuthContext from '../../context/auth/authContext';
 
 const Navbar = ({ title, icon}) => {
   const authContext = useContext(AuthContext);
+  const contactContext = useContext(ContactContext);
   const { isAuthenticated, logout, user } = authContext;
+  const { clearContacts } = contactContext;
+  
   const navigate = useNavigate();
+
   const onLogout = () => {
     logout();
+    clearContacts();
     navigate('/login');
   }
   const authLinks = (

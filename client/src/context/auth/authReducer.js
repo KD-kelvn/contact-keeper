@@ -19,7 +19,7 @@ export default (state, action)=>{
             user: action.payload
         };
     case AUTH_ERROR:
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
         return {
             ...state,
             token: null,
@@ -37,7 +37,9 @@ export default (state, action)=>{
             isLoading: false
         };
     case LOGIN_SUCCESS:
+        // console.log(action.payload.token);
         localStorage.setItem('token', action.payload.token);
+        console.log(localStorage.getItem('token'));
         return {
             ...state,
             ...action.payload,

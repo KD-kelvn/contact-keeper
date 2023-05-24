@@ -39,7 +39,7 @@ const Register = props => {
             }else{
                 // setUser(user);
                 // make post request 
-               return register({name, email, password});
+                 register({name, email, password});
                 // return response
                 // redirect user
                 // clear state 

@@ -7,13 +7,14 @@ import Home from "./components/pages/Home";
 import About from "./components/pages/About";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-
+import Private from "./components/routes/Private";
 import ContactState from "./context/contact/ContactState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 
-if(localStorage.token){
-  setAuthToken(localStorage.token);
+if(localStorage.getItem('token')){
+  console.log('TRUE')
+  setAuthToken(localStorage.getItem('token'));
 }
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
           <Navbar />
           <div className="container">
             <Alert/>
+            
             <Routes>
-              <Route index element={<Home />} />
+              <Route path="/" element={<Home/>}/>
               <Route path="/about" element={<About />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />

@@ -34,7 +34,8 @@ const ContactForm = () => {
     const onSubmit = e => {
         e.preventDefault();
         if(current === null){
-            addContact(contact);
+          
+            addContact({...contact, name,email,phone,type});
         }else{
             updateContact(contact);
         }

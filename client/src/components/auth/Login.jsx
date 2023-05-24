@@ -5,15 +5,14 @@ import AlertContext from '../../context/alert/alertContext';
 import AuthContext from '../../context/auth/authContext';
 
 const Login = () => {
-    const navigate = useNavigate();
     const alertContext = useContext(AlertContext);
     const authContext = useContext(AuthContext);
-
+    const { setAlert } = alertContext;
     const { login, error, clearErrors, isAuthenticated, token } = authContext;
-
+    const navigate = useNavigate();
     useEffect(()=>{
         if(isAuthenticated && token !== null){
-            navigate('/');
+           navigate('/');
         }
         if(error === 'Invalid credentials'){
             setAlert(error, 'danger');
@@ -23,8 +22,8 @@ const Login = () => {
             setAlert(error, 'danger');
             clearErrors();
         }
-    }, [error, isAuthenticated, navigate]);
-    const { setAlert } = alertContext;
+    }, [error, isAuthenticated,token]);
+    
     const [user, setUser] = useState({
         email: '',
         password: '',
@@ -33,17 +32,13 @@ const Login = () => {
     const { email, password} = user;
 
     const onChange = (e)=> setUser({...user, [e.target.name]: e.target.value});
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
-        if( email === '' && password === '' ){
+        if( email === '' || password === '' ){
            return setAlert("Please enter valid credentials", "danger");
         } 
         // make post request 
         login({email,password});
-        // return response
-        // redirect user
-        // navigate('/');
-        // clear state
         
     }
 
